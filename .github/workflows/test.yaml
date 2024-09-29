@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven-3-jdk-11@master
+        uses: snyk/actions/maven-3-jdk-17@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     needs: Caching
@@ -26,7 +26,6 @@ jobs:
             ${{ runner.os }}-maven-
 
   SAST:
-    name: Build and analyze
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -54,4 +53,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=devops-fth_web-goat
-    needs: Caching 
+    needs: SCA 
