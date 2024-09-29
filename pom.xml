@@ -1,5 +1,6 @@
-<?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
@@ -52,21 +53,6 @@
             <email>jason.white@owasp.org</email>
         </developer>
         <developer>
-            <id>jwayman</id>
-            <name>Jeff Wayman</name>
-            <email/>
-        </developer>
-        <developer>
-            <id>dcowden</id>
-            <name>Dave Cowden</name>
-            <email/>
-        </developer>
-        <developer>
-            <id>lawson89</id>
-            <name>Richard Lawson</name>
-            <email/>
-        </developer>
-        <developer>
             <id>dougmorato</id>
             <name>Doug Morato</name>
             <email>doug.morato@owasp.org</email>
@@ -75,6 +61,8 @@
             <timezone>America/New_York</timezone>
             <properties>
                 <picUrl>https://avatars2.githubusercontent.com/u/9654?v=3&amp;s=150</picUrl>
+                <sonar.organization>devops-fth</sonar.organization>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
             </properties>
         </developer>
     </developers>
@@ -114,7 +102,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- This build number will be ubdated by Travis-CI -->
+        <!-- This build number will be updated by Travis-CI -->
         <build.number>build</build.number>
 
         <!-- Shared properties with plugins and version numbers across submodules-->
@@ -189,8 +177,6 @@
         <pluginRepository>
             <id>apache.snapshots</id>
             <url>http://repository.apache.org/snapshots/</url>
-            <!-- The releases element here is due to an issue in Maven 2.0 that will be
-                 fixed in future releases. This should be able to be disabled altogether. -->
             <releases>
                 <updatePolicy>daily</updatePolicy>
             </releases>
@@ -226,9 +212,7 @@
                                 </goals>
                                 <phase>generate-resources</phase>
                                 <configuration>
-                                    <outputDirectory>
-                                        ${project.basedir}/webgoat-container/src/main/webapp/plugin_lessons
-                                    </outputDirectory>
+                                    <outputDirectory>${project.basedir}/webgoat-container/src/main/webapp/plugin_lessons</outputDirectory>
                                     <includeArtifactIds>dist</includeArtifactIds>
                                     <includes>*.jar</includes>
                                 </configuration>
@@ -294,40 +278,25 @@
                         <artifactId>findbugs-maven-plugin</artifactId>
                         <version>3.0.5</version>
                         <configuration>
-                            <!--
-                               Enables analysis which takes more memory but finds more bugs.
-                               If you run out of memory, changes the value of the effort element
-                               to 'Low'.
-                            -->
-                        <effort>Max</effort>
-                        <!-- Reports all bugs (other values are medium and max) -->
-                        <threshold>Low</threshold>
-                        <!-- Produces XML report -->
-                        <xmlOutput>true</xmlOutput>
-                        <!-- Configures the directory in which the XML report is created -->
-                        <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
-                    </configuration>
-                    <executions>
-                        <!-- 
-                           Ensures that FindBugs inspects source code when project is compiled. 
-                        -->
-                        <execution>
-                            <id>analyze-compile</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                   </plugin>     
+                            <effort>Max</effort>
+                            <threshold>Low</threshold>
+                            <xmlOutput>true</xmlOutput>
+                            <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>analyze-compile</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
-    <properties>
-        <sonar.organization>devops-fth</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -373,7 +342,6 @@
                     <check/>
                     <format>xml</format>
                     <maxmem>256m</maxmem>
-                    <!-- aggregated reports for multi-module projects -->
                     <aggregate>true</aggregate>
                 </configuration>
             </plugin>
@@ -385,8 +353,8 @@
                     <apiKey>a1e4a9da4ed34ee44cab</apiKey>
                     <projectId>562da95be346d7000e0369ac</projectId>
                 </configuration>
-            </plugin>           
-         </plugins>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
